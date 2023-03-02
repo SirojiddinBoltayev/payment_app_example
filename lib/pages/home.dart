@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:payment_app_example/pages/account_page.dart';
+import 'package:payment_app_example/pages/diamonds_page.dart';
 import 'package:payment_app_example/pages/home_page.dart';
-import 'package:payment_app_example/pages/widget/banner_view.dart';
 import 'package:provider/provider.dart';
 
 import '../view_model/main_provider.dart';
-import 'package:flutter/material.dart';
 
 import 'details_page.dart';
 
@@ -129,7 +128,7 @@ const SizedBox(height: 30,),
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Text("Sign up, it's free"),
                       ),
                     ],
@@ -138,7 +137,7 @@ const SizedBox(height: 30,),
                const  SizedBox(height: 10,),
 
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 30,),
+                  margin: const EdgeInsets.symmetric(horizontal: 30,),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25)
@@ -148,7 +147,7 @@ const SizedBox(height: 30,),
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Text("Sign in",style: TextStyle(color: Colors.black,),),
                       ),
                     ],
@@ -165,8 +164,9 @@ const SizedBox(height: 30,),
 
 class KategoriyaItemContainer extends StatelessWidget {
   final List listImage;
-  final List listTitle;
-  const KategoriyaItemContainer({Key? key,required this.listImage,required this.listTitle}) : super(key: key);
+  final List? listTitle;
+  bool isTitleShow;
+   KategoriyaItemContainer({Key? key,required this.listImage,this.listTitle,required this.isTitleShow}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -174,22 +174,22 @@ class KategoriyaItemContainer extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.all(25),
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: isTitleShow ? 3 : 2,
           mainAxisSpacing: 15,
           crossAxisSpacing: 15,
-          childAspectRatio: 0.6,
+          childAspectRatio: isTitleShow ? 0.6 : 0.9,
         ),
         delegate: SliverChildBuilderDelegate((context, index) {
           return Column(
             children: [
               InkWell(
                 onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> DetailsPage(title: listTitle[index], imagePath: listImage[index])));
+                  isTitleShow ? Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> DiamondsPage())) : Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> DetailsPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                         color: Colors.black.withOpacity(0.1), width: 3),
@@ -197,25 +197,25 @@ class KategoriyaItemContainer extends StatelessWidget {
                       image: AssetImage(
                         listImage[index],
                       ),
-                      fit: BoxFit.cover
+                      fit: isTitleShow ? BoxFit.cover :BoxFit.contain
                     )
                   ),
                   alignment: Alignment.center,
-                  child: SizedBox(
+                  child: const SizedBox(
                     height: 100,
 
                   ),
                 ),
               ),
               const SizedBox(height: 5,),
-              Text(
-                listTitle[index],
+             Text(
+                listTitle![index],
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+              ) ,
             ],
           );
-        }, childCount: 6 /*KategoriyaHomePageList.kategoriyaData.length,*/
+        }, childCount: isTitleShow ? 6 : 4 /*KategoriyaHomePageList.kategoriyaData.length,*/
             ),
       ),
     );

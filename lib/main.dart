@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payment_app_example/pages/home.dart';
+import 'package:payment_app_example/pages/home_page.dart';
 import 'package:payment_app_example/view_model/main_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -39,10 +40,8 @@ class _MyAppState extends State<MyApp> {
               brightness: Brightness.dark,
               primaryColor: Colors.indigo.shade900,
             ),
-      title: 'Adaptive Theme Demo',
-      home: MyHomePage(
-        title: 'Payment App',
-      ),
+      title: 'Payment app',
+      home: MyHomePage(title: 'Payment App',)
     );
   }
 }
