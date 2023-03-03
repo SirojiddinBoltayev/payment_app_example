@@ -30,21 +30,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
-  static  List<Widget> listPage = <Widget>[
-
+  static List<Widget> listPage = <Widget>[
     HomePage(),
     AccountPage(),
   ];
 
-  static const List<BottomNavigationBarItem> menuItemList = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
-    BottomNavigationBarItem(icon: Icon(Icons.person),label: "Account"),
+  static const List<BottomNavigationBarItem> menuItemList =
+      <BottomNavigationBarItem>[
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
   ];
+
   @override
   Widget build(BuildContext context) {
-
-
     final viewModel = Provider.of<MainProvider>(context);
     final size = MediaQuery.of(context).size;
 
@@ -66,9 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: listPage.elementAt(_selectedIndex),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
-        items:menuItemList,
+        items: menuItemList,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.shifting,
@@ -84,8 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 const Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 30.0, horizontal: 8),
+                  padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 8),
                   child: Text(
                     "Sign up to Paymen App today!",
                     style: TextStyle(
@@ -116,13 +112,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
-const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 30),
                   decoration: BoxDecoration(
                       color: Colors.indigo,
-                      borderRadius: BorderRadius.circular(25)
-                  ),
+                      borderRadius: BorderRadius.circular(25)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,21 +131,28 @@ const SizedBox(height: 30,),
                     ],
                   ),
                 ),
-               const  SizedBox(height: 10,),
-
+                const SizedBox(
+                  height: 10,
+                ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 30,),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                  ),
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(25)
-                  ),
+                      borderRadius: BorderRadius.circular(25)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: Text("Sign in",style: TextStyle(color: Colors.black,),),
+                        child: Text(
+                          "Sign in",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -166,7 +170,17 @@ class KategoriyaItemContainer extends StatelessWidget {
   final List listImage;
   final List? listTitle;
   bool isTitleShow;
-   KategoriyaItemContainer({Key? key,required this.listImage,this.listTitle,required this.isTitleShow}) : super(key: key);
+  String? isHome;
+  bool isValidate;
+
+  KategoriyaItemContainer(
+      {Key? key,
+      required this.listImage,
+      this.listTitle,
+      required this.isTitleShow,
+      this.isHome,
+      required this.isValidate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +188,7 @@ class KategoriyaItemContainer extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.all(25),
       sliver: SliverGrid(
-        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: isTitleShow ? 3 : 2,
           mainAxisSpacing: 15,
           crossAxisSpacing: 15,
@@ -184,43 +198,54 @@ class KategoriyaItemContainer extends StatelessWidget {
           return Column(
             children: [
               InkWell(
-                onTap: (){
-                  isTitleShow ? Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> DiamondsPage())) : Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=> DetailsPage()));
+                onTap: () {
+                  if (isTitleShow) {
+                    isValidate
+                        ? Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) => DetailsPage()))
+                        : Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) => DiamondsPage()));
+
+                  }
+
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                        color: Colors.black.withOpacity(0.1), width: 3),
-                    image: DecorationImage(
-                      image: AssetImage(
-                        listImage[index],
-                      ),
-                      fit: isTitleShow ? BoxFit.cover :BoxFit.contain
-                    )
-                  ),
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                          color: Colors.black.withOpacity(0.1), width: 3),
+                      image: DecorationImage(
+                          image: AssetImage(
+                            listImage[index],
+                          ),
+                          fit: isTitleShow ? BoxFit.cover : BoxFit.contain)),
                   alignment: Alignment.center,
                   child: const SizedBox(
                     height: 100,
-
                   ),
                 ),
               ),
-              const SizedBox(height: 5,),
-             Text(
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
                 listTitle![index],
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold),
-              ) ,
+              ),
             ],
           );
-        }, childCount: isTitleShow ? 6 : 4 /*KategoriyaHomePageList.kategoriyaData.length,*/
+        },
+            childCount: isTitleShow
+                ? 6
+                : 4 /*KategoriyaHomePageList.kategoriyaData.length,*/
             ),
       ),
     );
   }
 }
+
 class TitleList extends StatelessWidget {
   String title;
 
@@ -241,10 +266,7 @@ class TitleList extends StatelessWidget {
                 child: Text(
                   title,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                      fontSize: 18
-
-                  ),
+                      fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
               const Spacer(),
@@ -253,14 +275,9 @@ class TitleList extends StatelessWidget {
                     right: size.width * 0.05, top: size.height * 0.015),
                 child: const Text(
                   "More...",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                      fontSize: 18
-
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
                 ),
               ),
-
             ],
           ),
         ],
@@ -268,4 +285,3 @@ class TitleList extends StatelessWidget {
     );
   }
 }
-

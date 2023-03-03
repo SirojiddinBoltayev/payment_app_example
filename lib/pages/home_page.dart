@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>() ;
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MainProvider>(context);
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         KategoriyaItemContainer(
           listImage: viewModel.mostPopularImageList,
           listTitle: viewModel.mostPopularTitleList,
-           isTitleShow: true,
+           isTitleShow: true, isValidate: false,
         ),
       ],
     );
