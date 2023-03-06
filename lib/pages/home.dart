@@ -184,7 +184,7 @@ class KategoriyaItemContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return SliverPadding(
       padding: const EdgeInsets.all(25),
       sliver: SliverGrid(
@@ -198,32 +198,62 @@ class KategoriyaItemContainer extends StatelessWidget {
           return Column(
             children: [
               InkWell(
+                borderRadius: BorderRadius.circular(25),
                 onTap: () {
                   if (isTitleShow) {
-                    isValidate
-                        ? Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => DetailsPage()))
-                        : Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => DiamondsPage()));
-
+                    if (listTitle![index] == "Mobile Legends") {
+                      isValidate
+                          ? Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => DetailsPage()))
+                          : Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  DiamondsPage()));
+                    }
                   }
-
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                          color: Colors.black.withOpacity(0.1), width: 3),
-                      image: DecorationImage(
-                          image: AssetImage(
-                            listImage[index],
-                          ),
-                          fit: isTitleShow ? BoxFit.cover : BoxFit.contain)),
-                  alignment: Alignment.center,
-                  child: const SizedBox(
-                    height: 100,
-                  ),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                              color: Colors.black.withOpacity(0.1), width: 3),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                listImage[index],
+                              ),
+                              fit:
+                                  isTitleShow ? BoxFit.cover : BoxFit.contain)),
+                      alignment: Alignment.center,
+                      child: const SizedBox(
+                        height: 100,
+                      ),
+                    ),
+                    if (listTitle![index] != "Mobile Legends")
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.indigo.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(25)),
+                        height: size.height * 0.14,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Spacer(),
+                            Center(
+                                child: Text(
+                              "Coming soon",
+                              style: TextStyle(
+                                  color: Colors.orange.withOpacity(0.5),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            )),
+                            Spacer()
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(
